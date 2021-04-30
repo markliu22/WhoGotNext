@@ -1,7 +1,9 @@
 TODO:
 
-connect server to database
-CRUD for bookings
-user authorization for bookings?
+make sure you can't create new user with existing username
+delete booking
+update username? update booking?
 
 whole frontend
+  save jwt in cookies/local storage
+  google maps API?
