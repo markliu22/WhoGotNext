@@ -1,0 +1,7 @@
+TODO:
+
+connect server to database
+CRUD for bookings
+user authorization for bookings?
+
+whole frontend
