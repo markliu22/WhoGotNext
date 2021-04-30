@@ -69,8 +69,20 @@ app.post("/api/login", async (req, res) => {
   }
 });
 
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+  if (!token) return res.sendStatus(401);
+  jwt.verify(token, "secretkey", (err, decode) => {
+    if (err) return res.sendStatus(403);
+    req.user = decode;
+    next();
+  });
+}
+
 // delete user
-app.delete("/api/users/:id", async (req, res) => {
+// authenticateToken runs before delete request
+app.delete("/api/users/:id", authenticateToken, async (req, res) => {
   const id = req.params.id;
   const deletedUser = await pool.query(`DELETE FROM users WHERE user_id = $1`, [
     id,
@@ -107,7 +119,7 @@ app.get("/api/bookings/user/:id", async (req, res) => {
 });
 
 // create booking
-app.post("/api/book", async (req, res) => {
+app.post("/api/bookings", authenticateToken, async (req, res) => {
   const booking_location = req.body.booking_location;
   const booking_date = req.body.booking_date;
   const start_time = req.body.start_time;
@@ -128,7 +140,7 @@ app.post("/api/book", async (req, res) => {
 // "who else is coming?" feature
 // get all bookings in same location, date, and overlapping time, then get all usernames from booker_id
 // SELECT * FROM users WHERE user_id IN (SELECT booker_id FROM bookings WHERE booking_location = '1234 Cherry Rd W, Toronto, ON L5N 9V7' AND booking_date = '2021-03-03' AND start_time BETWEEN '00:00:00' AND '12:00:30');
-app.get("/api/users/bookings/:id", async (req, res) => {
+app.get("/api/bookings/users/:id", async (req, res) => {
   const id = req.params.id;
   const findBooking = await pool.query(
     `SELECT * FROM bookings WHERE booking_id = $1`,
@@ -145,6 +157,17 @@ app.get("/api/users/bookings/:id", async (req, res) => {
     [booking_location, booking_date, start_time, end_time]
   );
   res.json(usernames.rows);
+});
+
+// delete booking
+// authenticateToken runs before delete request
+app.delete("/api/bookings/:id", authenticateToken, async (req, res) => {
+  const id = req.params.id;
+  const deletedBooking = await pool.query(
+    `DELETE FROM bookings WHERE booking_id = $1`,
+    [id]
+  );
+  res.json({ id: id });
 });
 
 const PORT = process.env.PORT || 5000;
