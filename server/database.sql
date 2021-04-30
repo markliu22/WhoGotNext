@@ -8,6 +8,7 @@ CREATE TABLE users (
 
 CREATE TABLE bookings (
 	booking_id SERIAL,
+	booking_location VARCHAR(150),
 	booking_date DATE,
 	start_time TIME,
 	end_time TIME,

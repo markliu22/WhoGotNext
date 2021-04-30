@@ -15,6 +15,8 @@ app.get("/", (req, res) => {
   res.send("wassupp yo you reached the api");
 });
 
+// USERS --------------------------------------
+
 // get all users
 app.get("/api/users", async (req, res) => {
   const allUsers = await pool.query(`SELECT * FROM users`);
@@ -28,7 +30,7 @@ app.get("/api/users/:id", async (req, res) => {
   res.json(user.rows[0]);
 });
 
-// handle signup (create user)
+// signup (create user)
 app.post("/api/signup", async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
@@ -45,7 +47,7 @@ app.post("/api/signup", async (req, res) => {
   });
 });
 
-// handle login
+// login
 app.post("/api/login", async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
@@ -67,7 +69,7 @@ app.post("/api/login", async (req, res) => {
   }
 });
 
-// handle delete user
+// delete user
 app.delete("/api/users/:id", async (req, res) => {
   const id = req.params.id;
   const deletedUser = await pool.query(`DELETE FROM users WHERE user_id = $1`, [
@@ -75,6 +77,58 @@ app.delete("/api/users/:id", async (req, res) => {
   ]);
   res.json({ id: id });
 });
+
+// "who else is coming?" feature
+// get all bookings in same location, overlapping time, then get all usernames from booker_id
+
+// BOOKINGS --------------------------------------
+
+// get all bookings
+app.get("/api/bookings", async (req, res) => {
+  const allBookings = await pool.query(`SELECT * FROM bookings`);
+  res.json(allBookings.rows);
+});
+
+// get single booking based on booking id
+// app.get("/api/bookings/:id", async (req, res) => {
+//   const id = req.params.id;
+//   const booking = await pool.query(
+//     `SELECT * FROM bookings WHERE booking_id = $1`,
+//     [id]
+//   );
+//   res.json(booking.rows[0]);
+// });
+
+// get all bookings from a single user
+app.get("/api/bookings/:id", async (req, res) => {
+  const id = req.params.id;
+  const bookings = await pool.query(
+    `SELECT * FROM bookings WHERE booker_id = $1`,
+    [id]
+  );
+  res.json(bookings.rows);
+});
+
+// create booking
+app.post("/api/book", async (req, res) => {
+  const booking_location = req.body.booking_location;
+  const booking_date = req.body.booking_date;
+  const start_time = req.body.start_time;
+  const end_time = req.body.end_time;
+  const booker_id = req.body.booker_id;
+
+  // INSERT INTO bookings (booking_location, booking_date, start_time, end_time, booker_id) VALUES ('830 Paisley Blvd W, Mississauga, ON L5C 3P5', '2021-01-15', '00:00:00', '12:0:00', 0);
+  const newBooking = await pool.query(
+    `INSERT INTO bookings (booking_location, booking_date, start_time, end_time, booker_id) VALUES ($1, $2, $3, $4, $5) RETURNING *`,
+    [booking_location, booking_date, start_time, end_time, booker_id]
+  );
+  const booking = newBooking.rows[0];
+  res.json({
+    booking: booking,
+  });
+});
+
+//
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
