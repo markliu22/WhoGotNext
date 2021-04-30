@@ -78,9 +78,6 @@ app.delete("/api/users/:id", async (req, res) => {
   res.json({ id: id });
 });
 
-// "who else is coming?" feature
-// get all bookings in same location, overlapping time, then get all usernames from booker_id
-
 // BOOKINGS --------------------------------------
 
 // get all bookings
@@ -90,17 +87,17 @@ app.get("/api/bookings", async (req, res) => {
 });
 
 // get single booking based on booking id
-// app.get("/api/bookings/:id", async (req, res) => {
-//   const id = req.params.id;
-//   const booking = await pool.query(
-//     `SELECT * FROM bookings WHERE booking_id = $1`,
-//     [id]
-//   );
-//   res.json(booking.rows[0]);
-// });
+app.get("/api/bookings/:id", async (req, res) => {
+  const id = req.params.id;
+  const booking = await pool.query(
+    `SELECT * FROM bookings WHERE booking_id = $1`,
+    [id]
+  );
+  res.json(booking.rows[0]);
+});
 
 // get all bookings from a single user
-app.get("/api/bookings/:id", async (req, res) => {
+app.get("/api/bookings/user/:id", async (req, res) => {
   const id = req.params.id;
   const bookings = await pool.query(
     `SELECT * FROM bookings WHERE booker_id = $1`,
@@ -128,7 +125,27 @@ app.post("/api/book", async (req, res) => {
   });
 });
 
-//
+// "who else is coming?" feature
+// get all bookings in same location, date, and overlapping time, then get all usernames from booker_id
+// SELECT * FROM users WHERE user_id IN (SELECT booker_id FROM bookings WHERE booking_location = '1234 Cherry Rd W, Toronto, ON L5N 9V7' AND booking_date = '2021-03-03' AND start_time BETWEEN '00:00:00' AND '12:00:30');
+app.get("/api/users/bookings/:id", async (req, res) => {
+  const id = req.params.id;
+  const findBooking = await pool.query(
+    `SELECT * FROM bookings WHERE booking_id = $1`,
+    [id]
+  );
+  const booking = findBooking.rows[0];
+  const booking_location = booking.booking_location;
+  const booking_date = booking.booking_date;
+  const start_time = booking.start_time;
+  const end_time = booking.end_time;
+  // res.json(booking.rows[0]);
+  const usernames = await pool.query(
+    `SELECT username FROM users WHERE user_id IN (SELECT booker_id FROM bookings WHERE booking_location = $1 AND booking_date = $2 AND start_time BETWEEN $3 AND $4);`,
+    [booking_location, booking_date, start_time, end_time]
+  );
+  res.json(usernames.rows);
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
