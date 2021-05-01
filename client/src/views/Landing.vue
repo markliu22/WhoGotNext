@@ -24,8 +24,7 @@
 </template>
 
 <script>
-// @ is an alias to /src
-const axios = require("axios");
+// const axios = require("axios");
 const cookie = require("js-cookie");
 
 export default {
@@ -60,7 +59,6 @@ export default {
         const data = await res.json();
         cookie.set("token", data.token);
         const user_id = data.user_id;
-        // console.log(data);
         // this.$router.push(`http://localhost:8080/myhome/${user_id}`);
         this.$router.push({ name: "MyHome", params: { id: user_id } });
       } else {
