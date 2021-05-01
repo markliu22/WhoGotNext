@@ -1,7 +1,6 @@
 TODO:
 
 make sure you can't create new user with existing username
-delete booking
 update username? update booking?
 
 whole frontend
