@@ -1,21 +1,20 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet commodi
-      temporibus dignissimos ipsum esse laborum totam consectetur nisi quaerat
-      ducimus! Illo dolores hic quisquam, in unde optio ullam? Perferendis,
-      unde.
-    </p>
+    <h1 v-if="user_id == ''"></h1>
+    <h1 v-else>Hello {{ username }}</h1>
+    <Bookings :bookings="bookings" />
   </div>
 </template>
 
 <script>
 // const axios = require("axios");
+import Bookings from "../components/Bookings";
 
 export default {
   name: "MyHome",
-  components: {},
+  components: {
+    Bookings,
+  },
   data() {
     return {
       user_id: "",
@@ -23,6 +22,7 @@ export default {
       bookings: [],
     };
   },
+  // created, mounted both good
   async mounted() {
     let uri = window.location.href
       .split("")
@@ -48,6 +48,7 @@ export default {
     const bookingsAsArray = Object.values(dataBookings);
     this.bookings = bookingsAsArray;
   },
+  // created() {},
   methods: {},
 };
 </script>

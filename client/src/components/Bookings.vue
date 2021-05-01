@@ -1,0 +1,25 @@
+<template>
+  <div>
+    <div v-for="booking in bookings" v-bind:key="booking.booking_id">
+      <!-- <h3>{{ booking.booking_location }}</h3> -->
+      <!-- <h3>{{ booking.booking_location }}</h3> -->
+      <Booking v-bind:booking="booking" />
+    </div>
+  </div>
+  <!-- <h1>CAN YOU SEE ME</h1> -->
+</template>
+
+<script>
+// import { defineComponent } from '@vue/composition-api'
+import Booking from "./Booking";
+
+export default {
+  name: "Bookings",
+  props: {
+    bookings: Array,
+  },
+  components: {
+    Booking,
+  },
+};
+</script>
