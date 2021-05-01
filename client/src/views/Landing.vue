@@ -1,7 +1,7 @@
 <template>
   <div class="landing">
     <h1 v-if="login">Login</h1>
-    <h1 v-else>Register</h1>
+    <h1 v-else>Sign Up</h1>
     <form class="login-form" @submit.prevent="handleSubmit">
       <p>
         <input type="text" v-model="username" placeholder="username" />
@@ -17,7 +17,7 @@
     </form>
     <h3>Switch to:</h3>
     <button @click="login = !login">
-      <h3 v-if="login">Register</h3>
+      <h3 v-if="login">Sign Up</h3>
       <h3 v-else>Login</h3>
     </button>
   </div>
@@ -26,6 +26,7 @@
 <script>
 // @ is an alias to /src
 const axios = require("axios");
+const cookie = require("js-cookie");
 
 export default {
   name: "Login",
@@ -37,33 +38,44 @@ export default {
       login: true,
       username: "",
       password: "",
+      token: "",
     };
   },
   methods: {
-    handleSubmit() {
+    async handleSubmit() {
       // change from fixed link
-      // console.log(this.username);
-      // console.log(this.password);
       const user = {
         username: this.username,
         password: this.password,
       };
       if (this.login) {
-        axios
-          .post("http://localhost:5000/api/login", user)
-          .then((response) => console.log(response))
-          .catch((error) => console.log(error));
+        const res = await fetch("http://localhost:5000/api/login", {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify(user),
+        });
+
+        const data = await res.json();
+        // console.log(data.token);
+        cookie.set("token", data.token);
+        this.$router.push("http://localhost:8080/myhome");
       } else {
-        axios
-          .post("http://localhost:5000/api/signup", user)
-          .then((response) => console.log(response))
-          .catch((error) => console.log(error));
+        const res = await fetch("http://localhost:5000/api/signup", {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify(user),
+        });
+
+        const data = await res.json();
+        // console.log(data.token);
+        cookie.set("token", data.token);
+        this.$router.push("http://localhost:8080/myhome");
       }
     },
-    // handleForm() {
-    //   const oldState = this.login;
-    //   this.login = !oldState;
-    // },
   },
 };
 </script>
