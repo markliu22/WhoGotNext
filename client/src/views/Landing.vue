@@ -5,11 +5,9 @@
     <form class="login-form" @submit.prevent="handleSubmit">
       <p>
         <input type="text" v-model="username" placeholder="username" />
-        <!-- {{ username }} -->
       </p>
       <p>
         <input type="password" v-model="password" placeholder="password" />
-        <!-- {{ password }} -->
       </p>
       <p>
         <button type="submit">Submit</button>
@@ -25,7 +23,7 @@
 
 <script>
 // const axios = require("axios");
-const cookie = require("js-cookie");
+const Cookies = require("js-cookie");
 
 export default {
   name: "Login",
@@ -57,7 +55,7 @@ export default {
         });
 
         const data = await res.json();
-        cookie.set("token", data.token);
+        Cookies.set("token", data.token);
         const user_id = data.user_id;
         // this.$router.push(`http://localhost:8080/myhome/${user_id}`);
         this.$router.push({ name: "MyHome", params: { id: user_id } });
@@ -71,7 +69,7 @@ export default {
         });
 
         const data = await res.json();
-        cookie.set("token", data.token);
+        Cookies.set("token", data.token);
         const user_id = data.user_id;
         // this.$router.push(`http://localhost:8080/myhome/${user_id}`);
         this.$router.push({ name: "MyHome", params: { id: user_id } });

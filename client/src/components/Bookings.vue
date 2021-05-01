@@ -6,7 +6,6 @@
       <Booking v-bind:booking="booking" />
     </div>
   </div>
-  <!-- <h1>CAN YOU SEE ME</h1> -->
 </template>
 
 <script>

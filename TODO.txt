@@ -1,8 +1,9 @@
 TODO:
 
 make sure you can't create new user with existing username
-update username? update booking?
+update username, update booking endpoints needed?
 
 whole frontend
-  save jwt in cookies/local storage
+  "who else is coming?" feature on click
+  form to make booking
   google maps API?
