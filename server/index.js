@@ -42,6 +42,7 @@ app.post("/api/signup", async (req, res) => {
   // generate new token
   jwt.sign({ user: user }, "secretkey", (err, token) => {
     res.json({
+      user_id: user.user_id,
       token: token,
     });
   });
@@ -63,6 +64,7 @@ app.post("/api/login", async (req, res) => {
   } else {
     jwt.sign({ user: user }, "secretkey", (err, token) => {
       res.json({
+        user_id: user.user_id,
         token: token,
       });
     });

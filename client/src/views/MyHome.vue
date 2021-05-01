@@ -9,3 +9,16 @@
     </p>
   </div>
 </template>
+
+<script>
+// @ is an alias to /src
+
+export default {
+  name: "MyHome",
+  components: {},
+  data() {
+    return {};
+  },
+  methods: {},
+};
+</script>

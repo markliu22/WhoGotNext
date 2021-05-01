@@ -58,9 +58,11 @@ export default {
         });
 
         const data = await res.json();
-        // console.log(data.token);
         cookie.set("token", data.token);
-        this.$router.push("http://localhost:8080/myhome");
+        const user_id = data.user_id;
+        // console.log(data);
+        // this.$router.push(`http://localhost:8080/myhome/${user_id}`);
+        this.$router.push({ name: "MyHome", params: { id: user_id } });
       } else {
         const res = await fetch("http://localhost:5000/api/signup", {
           method: "POST",
@@ -71,9 +73,10 @@ export default {
         });
 
         const data = await res.json();
-        // console.log(data.token);
         cookie.set("token", data.token);
-        this.$router.push("http://localhost:8080/myhome");
+        const user_id = data.user_id;
+        // this.$router.push(`http://localhost:8080/myhome/${user_id}`);
+        this.$router.push({ name: "MyHome", params: { id: user_id } });
       }
     },
   },
