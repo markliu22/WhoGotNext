@@ -8,8 +8,8 @@
     <button @click="myEmitFunction(booking.booking_id)">Delete</button>
     <button @click="whosComing(booking.booking_id)">Who's coming?</button>
     <ul>
-      <li v-for="(username, index) in usernames" :key="index">
-        {{ username }}
+      <li v-for="(obj, index) in usernames" :key="index">
+        {{ obj.username }}
       </li>
     </ul>
     <!-- <h2>{{ usernames.length }}</h2> -->
@@ -21,7 +21,11 @@ export default {
   name: "Booking",
   props: {
     booking: Object,
-    usernames: [],
+  },
+  data() {
+    return {
+      usernames: [],
+    };
   },
   async mounted() {
     const resUsernames = await fetch(
