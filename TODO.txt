@@ -5,8 +5,5 @@ make sure you can't create new user with existing username
 change to uuid as primary key for users table
 
 frontend:
-styling button
-format date on Bookings
-"who else is coming?" feature on click
 
 

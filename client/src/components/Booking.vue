@@ -17,7 +17,7 @@
         <template v-if="showList">Hide</template>
         <template v-else>Who's coming?</template>
       </button>
-      <ul v-if="showList">
+      <ul class="username-list" v-if="showList">
         <li v-for="(obj, index) in usernames" :key="index">
           {{ obj.username }}
         </li>
@@ -79,6 +79,15 @@ export default {
   border-radius: 20px;
   margin: 10px;
 }
+.username-list li {
+  list-style-type: none;
+}
 .button-secondary {
+  background: none;
+  border: none;
+  margin: 5px;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
 }
 </style>
