@@ -18,9 +18,8 @@ export default {
   methods: {
     initMap() {
       this.map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: 83.9207, lng: 35.9565 },
-        scrollwheel: false,
-        zoom: 4,
+        center: { lat: 43.6532, lng: -79.3832 },
+        zoom: 10,
       });
     },
   },
@@ -29,7 +28,7 @@ export default {
 
 <style>
 #map {
-  height: 300px;
-  width: 500px;
+  /* height: 100%; */
+  /* width: 800px; */
 }
 </style>

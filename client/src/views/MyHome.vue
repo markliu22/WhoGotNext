@@ -1,28 +1,61 @@
 <template>
-  <div class="about">
-    <!-- <h1 v-if="user_id == ''"></h1> -->
-    <h1>Hello {{ username }}</h1>
-    <Map />
-    <form class="booking-form" @submit="handleSubmit">
-      <p>
-        <input type="text" v-model="booking_location" placeholder="location" />
-      </p>
-      <p>
-        <input type="text" v-model="booking_date" placeholder="date" />
-      </p>
-      <p>
-        <input type="text" v-model="start_time" placeholder="start" />
-      </p>
-      <p>
-        <input type="text" v-model="end_time" placeholder="end" />
-      </p>
+  <div class="home">
+    <div class="top-section">
+      <div class="left-section">
+        <div class="form">
+          <h1 class="welcome-message">Hello, {{ username }}.</h1>
+          <h1 class="prompt-message">Schedule your next game:</h1>
+          <form class="booking-form" @submit="handleSubmit">
+            <p>
+              <input
+                class="input-bar"
+                type="text"
+                v-model="booking_location"
+                placeholder="Location:"
+              />
+            </p>
+            <p>
+              <input
+                class="input-bar"
+                type="text"
+                v-model="booking_date"
+                placeholder="Date:"
+              />
+            </p>
+            <p>
+              <input
+                class="input-bar"
+                type="text"
+                v-model="start_time"
+                placeholder="Start Time:"
+              />
+            </p>
+            <p>
+              <input
+                class="input-bar"
+                type="text"
+                v-model="end_time"
+                placeholder="End Time:"
+              />
+            </p>
 
-      <p>
-        <button type="submit">Book!</button>
-      </p>
-    </form>
-    <h1>Here are your upcoming events:</h1>
-    <Bookings v-bind:bookings="bookings" />
+            <p>
+              <button class="button-bar" type="submit">Book!</button>
+            </p>
+          </form>
+        </div>
+      </div>
+
+      <div class="right-section">
+        <div class="map-component">
+          <Map id="map" />
+        </div>
+      </div>
+    </div>
+    <div class="bottom-section">
+      <h1>Your games:</h1>
+      <Bookings v-bind:bookings="bookings" />
+    </div>
   </div>
 </template>
 
@@ -96,7 +129,59 @@ export default {
         body: JSON.stringify(bookingObj),
       });
       const data = await res.json();
+      res.send(data);
     },
   },
 };
 </script>
+
+<style scoped>
+.top-section {
+  background-color: aliceblue;
+  padding: 15px;
+  border-radius: 15px;
+}
+.welcome-message {
+  font-size: 60px;
+}
+.form {
+  margin-top: 60px;
+  height: 600px;
+  width: 900px;
+  margin-left: 45px;
+}
+.input-bar {
+  width: 250px;
+  height: 25px;
+  border: 3px solid #2c3e50;
+  border-radius: 15px;
+  padding: 6px;
+}
+.button-bar {
+  width: 150px;
+  height: 30px;
+  border: 3px solid #2c3e50;
+  border-radius: 10px;
+  padding: 0px;
+  background-color: #cfe1ff;
+}
+.map-component {
+  margin-right: 45px;
+}
+#map {
+  height: 670px;
+  width: 900px;
+  /* border: 3px solid #2c3e50; */
+  border-radius: 15px;
+}
+.top-section {
+  display: flex;
+  justify-content: space-between;
+}
+.left-section {
+  /* float: left; */
+}
+.right-section {
+  /* float: right; */
+}
+</style>

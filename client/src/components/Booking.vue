@@ -19,8 +19,7 @@ export default {
 
 <style scoped>
 .booking-card {
-  /* background-color: #ddffba; */
-  border: 4px solid black;
+  border: 4px solid #2c3e50;
   border-radius: 20px;
   margin: 10px;
 }

@@ -1,23 +1,35 @@
 <template>
   <div class="landing">
-    <h1 v-if="login">Login</h1>
-    <h1 v-else>Sign Up</h1>
-    <form class="login-form" @submit.prevent="handleSubmit">
-      <p>
-        <input type="text" v-model="username" placeholder="username" />
-      </p>
-      <p>
-        <input type="password" v-model="password" placeholder="password" />
-      </p>
-      <p>
-        <button type="submit">Submit</button>
-      </p>
-    </form>
-    <h3>Switch to:</h3>
-    <button @click="login = !login">
-      <h3 v-if="login">Sign Up</h3>
-      <h3 v-else>Login</h3>
-    </button>
+    <div class="form">
+      <h1 v-if="login">Login</h1>
+      <h1 v-else>Sign Up</h1>
+      <form @submit.prevent="handleSubmit">
+        <p>
+          <input
+            class="input-bar"
+            type="text"
+            v-model="username"
+            placeholder="username"
+          />
+        </p>
+        <p>
+          <input
+            class="input-bar"
+            type="password"
+            v-model="password"
+            placeholder="password"
+          />
+        </p>
+        <p>
+          <button class="button-bar" type="submit">Submit</button>
+        </p>
+      </form>
+      <h3>Switch to:</h3>
+      <button class="button-bar" @click="login = !login">
+        <p v-if="login">Sign Up</p>
+        <p v-else>Login</p>
+      </button>
+    </div>
   </div>
 </template>
 
@@ -78,3 +90,41 @@ export default {
   },
 };
 </script>
+<style scoped>
+.landing {
+  display: flex;
+  flex-direction: column;
+  background-color: aliceblue;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.form {
+  margin-top: 200px;
+  height: 600px;
+  width: 900px;
+  margin: 0 auto;
+  /* margin-left: 45px; */
+}
+.input-bar {
+  width: 250px;
+  height: 35px;
+  border: 3px solid #2c3e50;
+  border-radius: 15px;
+  padding: 6px;
+}
+.button-bar {
+  width: 150px;
+  height: 45px;
+  border: 3px solid #2c3e50;
+  border-radius: 10px;
+  background-color: #cfe1ff;
+  padding-top: px;
+}
+.button-bar p {
+  display: block;
+  text-align: center;
+}
+</style>
