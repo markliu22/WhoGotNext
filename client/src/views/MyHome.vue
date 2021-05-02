@@ -2,6 +2,7 @@
   <div class="home">
     <div class="top-section">
       <div class="left-section">
+        <button @click="userLogout">logout</button>
         <div class="form">
           <h1 class="welcome-message">Hello, {{ username }}.</h1>
           <h1 class="prompt-message">Schedule your next game:</h1>
@@ -145,6 +146,10 @@ export default {
       this.bookings = this.bookings.filter(
         (booking) => booking.booking_id !== id
       );
+    },
+    userLogout() {
+      Cookies.remove("token");
+      this.$router.push({ name: "Landing" });
     },
   },
 };

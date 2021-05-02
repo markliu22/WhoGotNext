@@ -79,6 +79,9 @@ export default {
   border-radius: 20px;
   margin: 10px;
 }
+.username-list {
+  padding: 0;
+}
 .username-list li {
   list-style-type: none;
 }
