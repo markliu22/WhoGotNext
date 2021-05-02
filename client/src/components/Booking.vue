@@ -1,9 +1,10 @@
 <template>
   <div class="booking-card">
     <h2>{{ booking.booking_location }}</h2>
+    <h3>Date: {{ booking.booking_date.substring(0, 10) }}</h3>
     <h3>
-      {{ booking.booking_date }} Start: {{ booking.start_time }} End:
-      {{ booking.end_time }}
+      Start: {{ timeConvert(booking.start_time) }} End:
+      {{ timeConvert(booking.end_time) }}
     </h3>
     <button @click="myEmitFunction(booking.booking_id)">Delete</button>
     <button @click="whosComing(booking.booking_id)">Who's coming?</button>
@@ -32,7 +33,7 @@ export default {
       "http://localhost:5000/api/bookings/users/" + this.booking.booking_id
     );
     const data = await resUsernames.json();
-    console.log(data);
+    // console.log(data);
     const usernamesAsArray = Object.values(data);
     this.usernames = usernamesAsArray;
   },
@@ -42,7 +43,21 @@ export default {
       // could've also just made DELETE request here?
       this.$emit("del-booking-event", id);
     },
-    whosComing(id) {},
+    timeConvert(time) {
+      // Check correct time format and split into components
+      time = time
+        .toString()
+        .match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+      if (time.length > 1) {
+        // If time format correct
+        time = time.slice(1); // Remove full string match value
+        time[5] = +time[0] < 12 ? "AM" : "PM"; // Set AM/PM
+        time[0] = +time[0] % 12 || 12; // Adjust hours
+      }
+      return time.join(""); // return adjusted time or original string
+    },
+    // whosComing(id) {},
   },
   // emits: ["del-booking-event"],
 };
