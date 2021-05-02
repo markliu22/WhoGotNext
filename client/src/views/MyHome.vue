@@ -131,7 +131,7 @@ export default {
         },
         body: JSON.stringify(bookingObj),
       });
-      // const data = await res.json();
+      // const data = await res.json(); // dont need
     },
     async deleteBooking(id) {
       const res = await fetch("http://localhost:5000/api/bookings/" + id, {

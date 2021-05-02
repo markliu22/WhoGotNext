@@ -6,6 +6,13 @@
       {{ booking.end_time }}
     </h3>
     <button @click="myEmitFunction(booking.booking_id)">Delete</button>
+    <button @click="whosComing(booking.booking_id)">Who's coming?</button>
+    <ul>
+      <li v-for="(username, index) in usernames" :key="index">
+        {{ username }}
+      </li>
+    </ul>
+    <!-- <h2>{{ usernames.length }}</h2> -->
   </div>
 </template>
 
@@ -14,6 +21,16 @@ export default {
   name: "Booking",
   props: {
     booking: Object,
+    usernames: [],
+  },
+  async mounted() {
+    const resUsernames = await fetch(
+      "http://localhost:5000/api/bookings/users/" + this.booking.booking_id
+    );
+    const data = await resUsernames.json();
+    console.log(data);
+    const usernamesAsArray = Object.values(data);
+    this.usernames = usernamesAsArray;
   },
   methods: {
     myEmitFunction(id) {
@@ -21,6 +38,7 @@ export default {
       // could've also just made DELETE request here?
       this.$emit("del-booking-event", id);
     },
+    whosComing(id) {},
   },
   // emits: ["del-booking-event"],
 };

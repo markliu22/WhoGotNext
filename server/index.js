@@ -142,6 +142,7 @@ app.post("/api/bookings", authenticateToken, async (req, res) => {
 // "who else is coming?" feature
 // get all bookings in same location, date, and overlapping time, then get all usernames from booker_id
 // SELECT * FROM users WHERE user_id IN (SELECT booker_id FROM bookings WHERE booking_location = '1234 Cherry Rd W, Toronto, ON L5N 9V7' AND booking_date = '2021-03-03' AND start_time BETWEEN '00:00:00' AND '12:00:30');
+// app.get("/api/bookings/users/:id", async (req, res) => {
 app.get("/api/bookings/users/:id", async (req, res) => {
   const id = req.params.id;
   const findBooking = await pool.query(
@@ -155,7 +156,7 @@ app.get("/api/bookings/users/:id", async (req, res) => {
   const end_time = booking.end_time;
   // res.json(booking.rows[0]);
   const usernames = await pool.query(
-    `SELECT username FROM users WHERE user_id IN (SELECT booker_id FROM bookings WHERE booking_location = $1 AND booking_date = $2 AND start_time BETWEEN $3 AND $4);`,
+    `SELECT username FROM users WHERE user_id IN (SELECT DISTINCT booker_id FROM bookings WHERE booking_location = $1 AND booking_date = $2 AND ((start_time >= $3 AND start_time <= $4) OR (end_time >= $3 AND end_time <= $4)));`,
     [booking_location, booking_date, start_time, end_time]
   );
   res.json(usernames.rows);
