@@ -3,7 +3,10 @@
     <div v-for="booking in bookings" v-bind:key="booking.booking_id">
       <!-- <h3>{{ booking.booking_location }}</h3> -->
       <!-- <h3>{{ booking.booking_location }}</h3> -->
-      <Booking v-bind:booking="booking" />
+      <Booking
+        v-on:del-booking-event="myEmitFunction"
+        v-bind:booking="booking"
+      />
     </div>
   </div>
 </template>
@@ -20,5 +23,12 @@ export default {
   components: {
     Booking,
   },
+  methods: {
+    myEmitFunction(id) {
+      // go up 1 more level to MyHome
+      this.$emit("del-booking-event", id);
+    },
+  },
+  // emits: ["del-booking-event"],
 };
 </script>

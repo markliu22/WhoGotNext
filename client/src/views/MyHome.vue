@@ -40,7 +40,7 @@
             </p>
 
             <p>
-              <button class="button-bar" type="submit">Book!</button>
+              <button class="button-bar" type="submit">Submit</button>
             </p>
           </form>
         </div>
@@ -53,8 +53,11 @@
       </div>
     </div>
     <div class="bottom-section">
-      <h1>Your games:</h1>
-      <Bookings v-bind:bookings="bookings" />
+      <h1>Your upcoming games:</h1>
+      <Bookings
+        v-on:del-booking-event="deleteBooking"
+        v-bind:bookings="bookings"
+      />
     </div>
   </div>
 </template>
@@ -128,14 +131,29 @@ export default {
         },
         body: JSON.stringify(bookingObj),
       });
-      const data = await res.json();
-      res.send(data);
+      // const data = await res.json();
+    },
+    async deleteBooking(id) {
+      const res = await fetch("http://localhost:5000/api/bookings/" + id, {
+        method: "DELETE",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: "Bearer " + Cookies.get("token"),
+        },
+      });
+      // const data = await res.json();
+      this.bookings = this.bookings.filter(
+        (booking) => booking.booking_id !== id
+      );
     },
   },
 };
 </script>
 
 <style scoped>
+.home {
+  margin: 5px;
+}
 .top-section {
   background-color: aliceblue;
   padding: 15px;

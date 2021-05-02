@@ -1,13 +1,12 @@
 TODO:
 
+backend:
 make sure you can't create new user with existing username
-update username, update booking endpoints needed?
+change to uuid as primary key for users table
 
-whole frontend
-  "who else is coming?" feature on click
-  form to make booking
-  
+frontend:
+delete booking
+format date on Bookings
+"who else is coming?" feature on click
 
 
-  google maps API
-  REMOVE API KEY FROM index.html

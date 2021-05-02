@@ -5,6 +5,7 @@
       {{ booking.booking_date }} Start: {{ booking.start_time }} End:
       {{ booking.end_time }}
     </h3>
+    <button @click="myEmitFunction(booking.booking_id)">Delete</button>
   </div>
 </template>
 
@@ -14,6 +15,14 @@ export default {
   props: {
     booking: Object,
   },
+  methods: {
+    myEmitFunction(id) {
+      // go up two levels (Bookings, then MyHome)
+      // could've also just made DELETE request here?
+      this.$emit("del-booking-event", id);
+    },
+  },
+  // emits: ["del-booking-event"],
 };
 </script>
 
