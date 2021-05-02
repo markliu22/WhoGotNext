@@ -2,7 +2,9 @@
   <div class="home">
     <div class="top-section">
       <div class="left-section">
-        <button @click="userLogout">logout</button>
+        <button class="button-secondary logout-button" @click="userLogout">
+          Logout
+        </button>
         <div class="form">
           <h1 class="welcome-message">Hello, {{ username }}.</h1>
           <h1 class="prompt-message">Schedule your next game:</h1>
@@ -169,7 +171,7 @@ export default {
 }
 .form {
   margin-top: 60px;
-  height: 600px;
+  height: 400px;
   width: 900px;
   margin-left: 45px;
 }
@@ -192,7 +194,7 @@ export default {
   margin-right: 45px;
 }
 #map {
-  height: 670px;
+  height: 550px;
   width: 900px;
   /* border: 3px solid #2c3e50; */
   border-radius: 15px;
@@ -201,10 +203,18 @@ export default {
   display: flex;
   justify-content: space-between;
 }
-.left-section {
-  /* float: left; */
+.logout-button {
+  position: fixed;
+  top: 15px;
+  left: 25px;
+  font-size: 20px;
 }
-.right-section {
-  /* float: right; */
+.button-secondary {
+  background: none;
+  border: none;
+  margin: 5px;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
 }
 </style>

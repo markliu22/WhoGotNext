@@ -40,7 +40,7 @@ app.post("/api/signup", async (req, res) => {
   );
   const user = newUser.rows[0];
   // generate new token
-  jwt.sign({ user: user }, "secretkey", (err, token) => {
+  jwt.sign({ user: user }, "secretkey", { expiresIn: "12h" }, (err, token) => {
     res.json({
       user_id: user.user_id,
       token: token,
