@@ -1,19 +1,28 @@
 <template>
   <div class="booking-card">
     <h2>{{ booking.booking_location }}</h2>
-    <h3>Date: {{ booking.booking_date.substring(0, 10) }}</h3>
+    <h3>{{ booking.booking_date.substring(0, 10) }}</h3>
     <h3>
       Start: {{ timeConvert(booking.start_time) }} End:
       {{ timeConvert(booking.end_time) }}
     </h3>
-    <button @click="myEmitFunction(booking.booking_id)">Delete</button>
-    <button @click="whosComing(booking.booking_id)">Who's coming?</button>
-    <ul>
-      <li v-for="(obj, index) in usernames" :key="index">
-        {{ obj.username }}
-      </li>
-    </ul>
-    <!-- <h2>{{ usernames.length }}</h2> -->
+    <button
+      class="button-secondary"
+      @click="myEmitFunction(booking.booking_id)"
+    >
+      Delete
+    </button>
+    <div>
+      <button class="button-secondary" v-on:click="showList = !showList">
+        <template v-if="showList">Hide</template>
+        <template v-else>Who's coming?</template>
+      </button>
+      <ul v-if="showList">
+        <li v-for="(obj, index) in usernames" :key="index">
+          {{ obj.username }}
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -25,6 +34,7 @@ export default {
   },
   data() {
     return {
+      showList: false,
       usernames: [],
     };
   },
@@ -68,5 +78,7 @@ export default {
   border: 4px solid #2c3e50;
   border-radius: 20px;
   margin: 10px;
+}
+.button-secondary {
 }
 </style>
