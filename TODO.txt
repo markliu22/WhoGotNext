@@ -6,4 +6,8 @@ update username, update booking endpoints needed?
 whole frontend
   "who else is coming?" feature on click
   form to make booking
-  google maps API?
+  
+
+
+  google maps API
+  REMOVE API KEY FROM index.html

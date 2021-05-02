@@ -2,6 +2,7 @@
   <div class="about">
     <!-- <h1 v-if="user_id == ''"></h1> -->
     <h1>Hello {{ username }}</h1>
+    <Map />
     <form class="booking-form" @submit="handleSubmit">
       <p>
         <input type="text" v-model="booking_location" placeholder="location" />
@@ -28,12 +29,14 @@
 <script>
 // const axios = require("axios");
 import Bookings from "../components/Bookings";
+import Map from "../components/Map";
 const Cookies = require("js-cookie");
 
 export default {
   name: "MyHome",
   components: {
     Bookings,
+    Map,
   },
   data() {
     return {
