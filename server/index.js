@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.get("/", (req, res) => {
-  res.send("wassupp yo you reached the api");
+  res.send("🌊 yo you reached the api");
 });
 
 // USERS --------------------------------------

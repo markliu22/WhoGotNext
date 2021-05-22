@@ -36,11 +36,19 @@ export default {
     return {
       showList: false,
       usernames: [],
+      baseURL: "",
+      // ref: https://stackoverflow.com/questions/45773860/changing-express-constant-based-on-url-ie-localhost-vs-production
     };
   },
   async mounted() {
+    this.baseURL =
+      process.env.NODE_ENV === "production"
+        ? process.env.WEBSITE_BASE_URL
+        : "http://localhost:5000";
+
+    //   "http://localhost:5000/api/bookings/users/" + this.booking.booking_id
     const resUsernames = await fetch(
-      "http://localhost:5000/api/bookings/users/" + this.booking.booking_id
+      this.baseURL + "/api/bookings/users/" + this.booking.booking_id
     );
     const data = await resUsernames.json();
     const usernamesAsArray = Object.values(data);

@@ -47,7 +47,15 @@ export default {
       username: "",
       password: "",
       token: "",
+      baseURL: "",
+      // ref: https://stackoverflow.com/questions/45773860/changing-express-constant-based-on-url-ie-localhost-vs-production
     };
+  },
+  mounted() {
+    this.baseURL =
+      process.env.NODE_ENV === "production"
+        ? process.env.WEBSITE_BASE_URL
+        : "http://localhost:5000";
   },
   methods: {
     async handleSubmit() {
@@ -57,7 +65,8 @@ export default {
         password: this.password,
       };
       if (this.login) {
-        const res = await fetch("http://localhost:5000/api/login", {
+        // const res = await fetch("http://localhost:5000/api/login", {
+        const res = await fetch(this.baseURL + "/api/login", {
           method: "POST",
           headers: {
             "Content-type": "application/json",
@@ -68,10 +77,10 @@ export default {
         const data = await res.json();
         Cookies.set("token", data.token);
         const user_id = data.user_id;
-        // this.$router.push(`http://localhost:8080/myhome/${user_id}`);
-        this.$router.push({ name: "MyHome", params: { id: user_id } });
+        this.$router.push({ name: "myHome", params: { id: user_id } });
       } else {
-        const res = await fetch("http://localhost:5000/api/signup", {
+        // const res = await fetch("http://localhost:5000/api/signup", {
+        const res = await fetch(this.baseURL + "/api/signup", {
           method: "POST",
           headers: {
             "Content-type": "application/json",
@@ -82,8 +91,7 @@ export default {
         const data = await res.json();
         Cookies.set("token", data.token);
         const user_id = data.user_id;
-        // this.$router.push(`http://localhost:8080/myhome/${user_id}`);
-        this.$router.push({ name: "MyHome", params: { id: user_id } });
+        this.$router.push({ name: "myHome", params: { id: user_id } });
       }
     },
   },

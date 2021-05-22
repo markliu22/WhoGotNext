@@ -85,10 +85,17 @@ export default {
       booking_date: "",
       start_time: "",
       end_time: "",
+      baseURL: "",
+      // ref: https://stackoverflow.com/questions/45773860/changing-express-constant-based-on-url-ie-localhost-vs-production
     };
   },
   // created, mounted both good
   async mounted() {
+    this.baseURL =
+      process.env.NODE_ENV === "production"
+        ? process.env.WEBSITE_BASE_URL
+        : "http://localhost:5000";
+
     let uri = window.location.href
       .split("")
       .reverse()
@@ -100,14 +107,16 @@ export default {
       .reverse()
       .join("");
 
-    const resUser = await fetch("http://localhost:5000/api/users/" + user_id);
+    // const resUser = await fetch("http://localhost:5000/api/users/" + user_id);
+    const resUser = await fetch(this.baseURL + "/api/users/" + user_id);
     const dataUser = await resUser.json();
     // console.log(dataUser);
     this.user_id = dataUser.user_id;
     this.username = dataUser.username;
 
+    //   "http://localhost:5000/api/bookings/user/" + user_id
     const resBookings = await fetch(
-      "http://localhost:5000/api/bookings/user/" + user_id
+      this.baseURL + "/api/bookings/user/" + user_id
     );
     const dataBookings = await resBookings.json();
     const bookingsAsArray = Object.values(dataBookings);
@@ -123,8 +132,8 @@ export default {
         booker_id: this.user_id,
       };
 
-      // change from fixed link
-      const res = await fetch("http://localhost:5000/api/bookings", {
+      // const res = await fetch("http://localhost:5000/api/bookings", {
+      const res = await fetch(this.baseURL + "/api/bookings", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -132,24 +141,23 @@ export default {
         },
         body: JSON.stringify(bookingObj),
       });
-      // const data = await res.json(); // dont need
     },
     async deleteBooking(id) {
-      const res = await fetch("http://localhost:5000/api/bookings/" + id, {
+      // const res = await fetch("http://localhost:5000/api/bookings/" + id, {
+      const res = await fetch(this.baseURL + "/api/bookings/" + id, {
         method: "DELETE",
         headers: {
           "Content-type": "application/json",
           Authorization: "Bearer " + Cookies.get("token"),
         },
       });
-      // const data = await res.json();
       this.bookings = this.bookings.filter(
         (booking) => booking.booking_id !== id
       );
     },
     userLogout() {
       Cookies.remove("token");
-      this.$router.push({ name: "Landing" });
+      this.$router.push({ name: "landing" });
     },
   },
 };

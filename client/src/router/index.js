@@ -5,12 +5,12 @@ import MyHome from "../views/MyHome.vue";
 const routes = [
   {
     path: "/",
-    name: "Landing",
+    name: "landing",
     component: Landing,
   },
   {
     path: "/myhome/:id",
-    name: "MyHome",
+    name: "myHome",
     component: MyHome,
   },
 ];
