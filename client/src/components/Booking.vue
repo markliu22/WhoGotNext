@@ -8,7 +8,7 @@
     </h3>
     <button
       class="button-secondary"
-      @click="myEmitFunction(booking.booking_id)"
+      @click="triggerDelBookingEvent(booking.booking_id)"
     >
       Delete
     </button>
@@ -43,14 +43,11 @@ export default {
       "http://localhost:5000/api/bookings/users/" + this.booking.booking_id
     );
     const data = await resUsernames.json();
-    // console.log(data);
     const usernamesAsArray = Object.values(data);
     this.usernames = usernamesAsArray;
   },
   methods: {
-    myEmitFunction(id) {
-      // go up two levels (Bookings, then MyHome)
-      // could've also just made DELETE request here?
+    triggerDelBookingEvent(id) {
       this.$emit("del-booking-event", id);
     },
     timeConvert(time) {
@@ -67,9 +64,7 @@ export default {
       }
       return time.join(""); // return adjusted time or original string
     },
-    // whosComing(id) {},
   },
-  // emits: ["del-booking-event"],
 };
 </script>
 

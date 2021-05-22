@@ -34,7 +34,6 @@
 </template>
 
 <script>
-// const axios = require("axios");
 const Cookies = require("js-cookie");
 
 export default {

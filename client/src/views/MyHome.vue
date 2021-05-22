@@ -66,7 +66,6 @@
 </template>
 
 <script>
-// const axios = require("axios");
 import Bookings from "../components/Bookings";
 import Map from "../components/Map";
 const Cookies = require("js-cookie");
@@ -123,7 +122,6 @@ export default {
         end_time: this.end_time,
         booker_id: this.user_id,
       };
-      // console.log("COOKIE: " + Cookies.get("token"));
 
       // change from fixed link
       const res = await fetch("http://localhost:5000/api/bookings", {

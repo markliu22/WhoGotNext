@@ -26,9 +26,4 @@ export default {
 };
 </script>
 
-<style>
-/* #map {
-  height: 100%;
-  width: 800px;
-} */
-</style>
+<style></style>
