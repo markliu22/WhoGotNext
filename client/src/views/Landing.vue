@@ -55,7 +55,7 @@ export default {
     // Use process.env.WEBSITE_BASE_URL later
     this.baseURL =
       process.env.NODE_ENV === "production"
-        ? "http://52.90.19.225/"
+        ? "http://52.90.19.225:5000/"
         : "http://localhost:5000/";
   },
   methods: {
