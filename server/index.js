@@ -13,7 +13,7 @@ app.get("/", (req, res) => {
   res.send("🌊 yo you reached the api");
 });
 
-// USERS --------------------------------------
+// USERS --------------------------------------.
 
 // get all users
 app.get("/api/users", async (req, res) => {
