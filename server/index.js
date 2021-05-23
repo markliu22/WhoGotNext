@@ -69,20 +69,21 @@ app.post("/api/login", async (req, res) => {
   }
 });
 
-function authenticateToken(req, res, next) {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
-  if (!token) return res.sendStatus(401);
-  jwt.verify(token, "secretkey", (err, decode) => {
-    if (err) return res.sendStatus(403);
-    req.user = decode;
-    next();
-  });
-}
+// function authenticateToken(req, res, next) {
+//   const authHeader = req.headers["authorization"];
+//   const token = authHeader && authHeader.split(" ")[1];
+//   if (!token) return res.sendStatus(401);
+//   jwt.verify(token, "secretkey", (err, decode) => {
+//     if (err) return res.sendStatus(403);
+//     req.user = decode;
+//     next();
+//   });
+// }
 
 // delete user
 // authenticateToken runs before delete request
-app.delete("/api/users/:id", authenticateToken, async (req, res) => {
+// app.delete("/api/users/:id", authenticateToken, async (req, res) => {
+app.delete("/api/users/:id", async (req, res) => {
   const id = req.params.id;
   const deletedUser = await pool.query(`DELETE FROM users WHERE user_id = $1`, [
     id,
@@ -119,7 +120,8 @@ app.get("/api/bookings/user/:id", async (req, res) => {
 });
 
 // create booking
-app.post("/api/bookings", authenticateToken, async (req, res) => {
+// app.post("/api/bookings", authenticateToken, async (req, res) => {
+app.post("/api/bookings", async (req, res) => {
   const booking_location = req.body.booking_location;
   const booking_date = req.body.booking_date;
   const start_time = req.body.start_time;
@@ -162,7 +164,8 @@ app.get("/api/bookings/users/:id", async (req, res) => {
 
 // delete booking
 // authenticateToken runs before delete request
-app.delete("/api/bookings/:id", authenticateToken, async (req, res) => {
+// app.delete("/api/bookings/:id", authenticateToken, async (req, res) => {
+app.delete("/api/bookings/:id", async (req, res) => {
   const id = req.params.id;
   const deletedBooking = await pool.query(
     `DELETE FROM bookings WHERE booking_id = $1`,
