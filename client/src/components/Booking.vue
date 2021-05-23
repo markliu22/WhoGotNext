@@ -42,8 +42,9 @@ export default {
   },
   async mounted() {
     // Use process.env.WEBSITE_BASE_URL later
-    this.baseURL =
-      process.env.NODE_ENV === "production" ? "" : "http://localhost:5000/";
+    // this.baseURL =
+    //   process.env.NODE_ENV === "production" ? "" : "http://localhost:5000/";
+    this.baseURL = "http://localhost:5000/";
 
     //   "http://localhost:5000/api/bookings/users/" + this.booking.booking_id
     const resUsernames = await fetch(

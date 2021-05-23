@@ -53,8 +53,9 @@ export default {
   },
   mounted() {
     // Use process.env.WEBSITE_BASE_URL later
-    this.baseURL =
-      process.env.NODE_ENV === "production" ? "" : "http://localhost:5000/";
+    // this.baseURL =
+    //   process.env.NODE_ENV === "production" ? "" : "http://localhost:5000/";
+    this.baseURL = "http://localhost:5000/";
   },
   methods: {
     async handleSubmit() {
