@@ -55,8 +55,8 @@ export default {
     // Use process.env.WEBSITE_BASE_URL later
     this.baseURL =
       process.env.NODE_ENV === "production"
-        ? "http://52.90.19.225:5000/"
-        : "http://localhost:5000/";
+        ? "/api"
+        : "http://localhost:5000/api";
   },
   methods: {
     async handleSubmit() {
@@ -67,7 +67,7 @@ export default {
       };
       if (this.login) {
         // const res = await fetch("http://localhost:5000/api/login", {
-        const res = await fetch(this.baseURL + "api/login", {
+        const res = await fetch(this.baseURL + "/login", {
           method: "POST",
           headers: {
             "Content-type": "application/json",
@@ -81,7 +81,7 @@ export default {
         this.$router.push({ name: "myHome", params: { id: user_id } });
       } else {
         // const res = await fetch("http://localhost:5000/api/signup", {
-        const res = await fetch(this.baseURL + "api/signup", {
+        const res = await fetch(this.baseURL + "/signup", {
           method: "POST",
           headers: {
             "Content-type": "application/json",
