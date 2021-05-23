@@ -91,10 +91,9 @@ export default {
   },
   // created, mounted both good
   async mounted() {
+    // Use process.env.WEBSITE_BASE_URL later
     this.baseURL =
-      process.env.NODE_ENV === "production"
-        ? process.env.WEBSITE_BASE_URL
-        : "http://localhost:5000";
+      process.env.NODE_ENV === "production" ? "" : "http://localhost:5000/";
 
     let uri = window.location.href
       .split("")
@@ -108,7 +107,7 @@ export default {
       .join("");
 
     // const resUser = await fetch("http://localhost:5000/api/users/" + user_id);
-    const resUser = await fetch(this.baseURL + "/api/users/" + user_id);
+    const resUser = await fetch(this.baseURL + "api/users/" + user_id);
     const dataUser = await resUser.json();
     // console.log(dataUser);
     this.user_id = dataUser.user_id;
@@ -116,7 +115,7 @@ export default {
 
     //   "http://localhost:5000/api/bookings/user/" + user_id
     const resBookings = await fetch(
-      this.baseURL + "/api/bookings/user/" + user_id
+      this.baseURL + "api/bookings/user/" + user_id
     );
     const dataBookings = await resBookings.json();
     const bookingsAsArray = Object.values(dataBookings);
@@ -133,7 +132,7 @@ export default {
       };
 
       // const res = await fetch("http://localhost:5000/api/bookings", {
-      const res = await fetch(this.baseURL + "/api/bookings", {
+      const res = await fetch(this.baseURL + "api/bookings", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -144,7 +143,7 @@ export default {
     },
     async deleteBooking(id) {
       // const res = await fetch("http://localhost:5000/api/bookings/" + id, {
-      const res = await fetch(this.baseURL + "/api/bookings/" + id, {
+      const res = await fetch(this.baseURL + "api/bookings/" + id, {
         method: "DELETE",
         headers: {
           "Content-type": "application/json",

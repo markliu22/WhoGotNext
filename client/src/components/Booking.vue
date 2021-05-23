@@ -41,14 +41,13 @@ export default {
     };
   },
   async mounted() {
+    // Use process.env.WEBSITE_BASE_URL later
     this.baseURL =
-      process.env.NODE_ENV === "production"
-        ? process.env.WEBSITE_BASE_URL
-        : "http://localhost:5000";
+      process.env.NODE_ENV === "production" ? "" : "http://localhost:5000";
 
     //   "http://localhost:5000/api/bookings/users/" + this.booking.booking_id
     const resUsernames = await fetch(
-      this.baseURL + "/api/bookings/users/" + this.booking.booking_id
+      this.baseURL + "api/bookings/users/" + this.booking.booking_id
     );
     const data = await resUsernames.json();
     const usernamesAsArray = Object.values(data);

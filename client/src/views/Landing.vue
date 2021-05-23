@@ -52,10 +52,9 @@ export default {
     };
   },
   mounted() {
+    // Use process.env.WEBSITE_BASE_URL later
     this.baseURL =
-      process.env.NODE_ENV === "production"
-        ? process.env.WEBSITE_BASE_URL
-        : "http://localhost:5000";
+      process.env.NODE_ENV === "production" ? "" : "http://localhost:5000";
   },
   methods: {
     async handleSubmit() {
@@ -66,7 +65,7 @@ export default {
       };
       if (this.login) {
         // const res = await fetch("http://localhost:5000/api/login", {
-        const res = await fetch(this.baseURL + "/api/login", {
+        const res = await fetch(this.baseURL + "api/login", {
           method: "POST",
           headers: {
             "Content-type": "application/json",
@@ -80,7 +79,7 @@ export default {
         this.$router.push({ name: "myHome", params: { id: user_id } });
       } else {
         // const res = await fetch("http://localhost:5000/api/signup", {
-        const res = await fetch(this.baseURL + "/api/signup", {
+        const res = await fetch(this.baseURL + "api/signup", {
           method: "POST",
           headers: {
             "Content-type": "application/json",
